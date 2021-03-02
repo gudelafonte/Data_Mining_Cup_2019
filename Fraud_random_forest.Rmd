@@ -1,0 +1,54 @@
+---
+Verificação de fraude Sistema de caixa automático de supermercado
+Ensamble Learning - Random Florest
+Arthur Gustavo de La Fonte Albuquerque - 2021.03.02
+Data Mining CUP 2019
+---
+
+```{r}
+#install.packages('randomForest')
+library(randomForest)
+fraud = read.csv('train.csv', sep = "|")
+
+#transforma classe em fator
+fraud$fraud = as.factor(fraud$fraud)
+head(fraud)
+dim(fraud)
+
+```
+Separa dados de treino e teste
+```{r}
+amostra = sample(2,1879,replace=T, prob=c(0.7,0.3))
+fraudtreino = fraud[amostra==1,]
+fraudteste = fraud[amostra==2,]
+dim(fraudtreino)
+dim(fraudteste)
+```
+Gera o modelo
+```{r}
+floresta = randomForest(fraud ~ .,data=fraudtreino, ntree=1000,importance=T)
+floresta
+plot(floresta)
+```
+Previsão
+```{r}
+previsao = predict(floresta,fraudteste)
+confusao = table(previsao,fraudteste$fraud)
+```
+Avaliação de Performance
+```{r}
+taxaacerto = (confusao[1] + confusao[4]) / sum(confusao)
+taxaacerto
+```
+```{r}
+fraud_test = read.csv('test.csv', sep = "|")
+dim(fraud_test)
+
+```
+```{r}
+previsao1 = predict(floresta,fraud_test)
+plot(previsao1)
+```
+
+
+
