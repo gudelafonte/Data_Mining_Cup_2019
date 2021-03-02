@@ -1,6 +1,6 @@
 ---
 Verificação de fraude Sistema de caixa automático de supermercado
-Ensamble Learning - Random Florest
+Ensamble Learning - Random Forest
 Arthur Gustavo de La Fonte Albuquerque - 2021.03.02
 Data Mining CUP 2019
 ---
